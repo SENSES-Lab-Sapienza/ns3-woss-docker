@@ -10,7 +10,7 @@ The following configurations are provided:
 
 | OS | ns-3 | WOSS | Docker image | Dockerfile |
 | :---: | :---: | :---: | :---: | :---: |
-| Ubuntu 18.04 | 3.33 | 1.12 | N/A | N/A |
+| Ubuntu 18.04 | 3.33 | 1.12.0 | N/A | [link][file1] |
 | TBD | TDB | TDB | N/A | N/A |
 
 # License
@@ -29,3 +29,4 @@ However, ns-3 and WOSS are distributed under their respective licenses:
 [docker-license]: ./LICENSE
 [ns3-license]: https://www.nsnam.org/develop/contributing-code/licensing/
 [woss-license]: http://telecom.dei.unipd.it/ns/woss/doxygen/License.html
+[file1]: ./u18.04-n3.33-w1.12.0/Dockerfile
