@@ -1,4 +1,27 @@
 # syntax=docker/dockerfile:1
+
+# MIT License
+
+# Copyright (c) 2021 Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab)
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 FROM ubuntu:18.04
 
 LABEL maintainer="giona.emanuele@gmail.com"
@@ -13,7 +36,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt -y install wget make
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt -y install build-essential g++ python3 make wget && \
+RUN apt -y install build-essential g++ python3 make wget apt-utils && \
  apt -y install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools && \
  apt -y install gir1.2-goocanvas-2.0 python3-gi python3-gi-cairo python3-pygraphviz gir1.2-gtk-3.0 ipython3 && \
  apt -y install autoconf cvs bzr unrar && \
@@ -50,12 +73,12 @@ RUN mkdir /home/woss && mkdir /home/woss_reqs && apt -y install gfortran unzip &
  wget http://telecom.dei.unipd.it/ns/woss/files/netcdf-cxx4-4.3.1.tar.gz && \
  tar -xf netcdf-cxx4-4.3.1.tar.gz && mv netcdf-cxx4-4.3.1 ../woss/
 
-COPY at/Makefile /home/woss/at/
+COPY at/Makefile /home/woss_reqs/at/
 
 RUN cd /home/woss_reqs/at && \
  make clean && make && \
  echo "export PATH=$PATH:/home/woss_reqs/at/Bellhop/" >> ~/.bashrc && \
- cd ../hdf5-1.8.13 && ./configure --enable-shared --prefix=/home/woss_reqs/ && \
+ cd /home/woss/hdf5-1.8.13 && ./configure --enable-shared --prefix=/home/woss_reqs/ && \
  make && make install && \
  cd ../netcdf-c-4.7.3 && \
  ./configure --prefix=/home/woss_reqs --enable-netcdf-4 --enable-shared --disable-dap CPPFLAGS="$CPPFLAGS -I/home/woss_reqs/include" LDFLAGS="$LDFLAGS -L/home/woss_reqs/lib" && \
@@ -78,7 +101,12 @@ RUN cd /home/downloads && \
  make && make install 
 
 # ===== ns-3 builds with WOSS =====
-# TODO
+COPY ns3-build/*.sh /home/ns-allinone-3.33/ns-3.33/
+
+RUN cd /home/ns-allinone-3.33/ && ./build.py && \
+ cd ns-3.33 && cp -R /home/woss/woss-ns3-1.12.0 src/ && mv src/woss-ns3-1.12.0 src/woss-ns3 && \
+ chmod +x build-debug.sh && chmod +x build-optimized.sh && \
+ ./build-optimized.sh && ./build-debug.sh
 
 # ===== Cleanup =====
 RUN rm -rf /home/downloads
