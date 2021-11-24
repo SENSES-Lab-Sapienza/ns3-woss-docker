@@ -10,7 +10,7 @@ simulation environment.
 
 | OS | ns-3 | WOSS | Docker image | Dockerfile |
 | :---: | :---: | :---: | :---: | :---: |
-| Ubuntu 18.04 | 3.33 | 1.12.0 | N/A | [link][file1] |
+| Ubuntu 18.04 | 3.33 | 1.12.0 | [`egiona/ns3-woss:u18.04-n3.33-w1.12.0`][image1] | [link][file1] |
 <!--- | TBD | TDB | TDB | N/A | N/A | --->
 
 All images can be found in the [Docker Hub repository][docker-hub-repo].
@@ -36,7 +36,7 @@ However, _utility scripts_ are only provided for UNIX-like systems.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `docker exec -it <container ID> /bin/bash`
 
-&nbsp;&nbsp;&nbsp;&nbsp; _You can obtain a container's ID using_&nbsp; `docker ps`
+&nbsp;&nbsp;&nbsp;&nbsp; _You can obtain a running container's ID using_&nbsp; `docker ps` _, or_&nbsp; `docker container ls -a` _for containers in any state._
 
 ## Optional instructions
 
@@ -47,7 +47,7 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./download-databases.sh <DBs directory>`
 
-&nbsp;&nbsp;&nbsp;&nbsp; _Were this utility to fail (or cannot be run due to not using a UNIX-like system), download both databases via browser and use your favorite decompression tool on them._
+&nbsp;&nbsp;&nbsp;&nbsp; _Were this utility to fail (or cannot be run due the lack of a UNIX-like system), download both databases via browser and use your favorite decompression tool on them._
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp; _More specifically, the extracted_&nbsp; `dbs` _directory should contain 4 sub-directories, namely:_&nbsp; `bathymetry`_,_ `seafloor_sediment`_,_ `ssp`_, and_&nbsp; `transducers`_._
 <br/>
@@ -71,6 +71,14 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 &nbsp;&nbsp;&nbsp;&nbsp; _The aforementioned utility scripts are placed in directory_&nbsp; `/home/ns-allinone-3.33/ns-3.33/` _within a container's filesystem._
 
+5. Mount a local directory into a container (just once, instead of `docker run`) using
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./mount <local/path/to/directory> <path/to/directory> <container name> <image name>`
+
+&nbsp;&nbsp;&nbsp;&nbsp; _Local path to be mounted must be absolute. The path within a container's filesystem is placed under its_&nbsp; `/home/` _directory._
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;_This is only needed the first time a container is instantiated, subsequent calls to_&nbsp; `docker start` _on the same container will automatically load the mounted directory._
+
 # Citing this work
 
 If you use any of the Docker images described in this repository, please cite this work using metadata described in the [CITATION.cff][citation] file.
@@ -90,13 +98,20 @@ chosen for the Docker images does not necessarily apply to them.
 [ns3]: https://www.nsnam.org/
 [woss]: http://telecom.dei.unipd.it/ns/woss/
 [docker]: https://www.docker.com/
+
+[image1]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.33-w1.12.0
 [file1]: ./u18.04-n3.33-w1.12.0/Dockerfile
+
 [docker-hub-repo]: https://hub.docker.com/repository/docker/egiona/ns3-woss
 [docker-install]: https://docs.docker.com/engine/install/
+
 [woss-dbs]: http://telecom.dei.unipd.it/ns/woss/files/WOSS-dbs-v1.6.0.tar.gz
 [gebco2020]: https://www.bodc.ac.uk/data/open_download/gebco/gebco_2020/zip/
+
 [ns3-builds]: https://www.nsnam.org/docs/release/3.35/tutorial/html/getting-started.html#build-profiles
+
 [citation]: ./CITATION.cff
+
 [docker-license]: ./LICENSE
 [ns3-license]: https://www.nsnam.org/develop/contributing-code/licensing/
 [woss-license]: http://telecom.dei.unipd.it/ns/woss/doxygen/License.html
