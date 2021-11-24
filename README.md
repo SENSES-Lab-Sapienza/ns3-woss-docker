@@ -36,7 +36,7 @@ However, _utility scripts_ are only provided for UNIX-like systems.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `docker exec -it <container ID> /bin/bash`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _You can obtain a container's ID using_&nbsp; `docker ps`
+&nbsp;&nbsp;&nbsp;&nbsp; _You can obtain a container's ID using_&nbsp; `docker ps`
 
 ## Optional instructions
 
@@ -47,19 +47,19 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./download-databases.sh <DBs directory>`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Were this utility to fail (or cannot be run due to not using a UNIX-like system), download both databases via browser and use your favorite decompression tool on them._
+&nbsp;&nbsp;&nbsp;&nbsp; _Were this utility to fail (or cannot be run due to not using a UNIX-like system), download both databases via browser and use your favorite decompression tool on them._
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _More specifically, the extracted_&nbsp; `dbs` _directory should contain 4 sub-directories, namely:_&nbsp; `bathymetry`_,_ `seafloor_sediment`_,_ `ssp`_, and_&nbsp; `transducers`_._
+&nbsp;&nbsp;&nbsp;&nbsp; _More specifically, the extracted_&nbsp; `dbs` _directory should contain 4 sub-directories, namely:_&nbsp; `bathymetry`_,_ `seafloor_sediment`_,_ `ssp`_, and_&nbsp; `transducers`_._
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Once extracted, place the_&nbsp; `GEBCO_2020.nc` _file under the_&nbsp; `dbs/bathymetry/` _sub-directory._
+&nbsp;&nbsp;&nbsp;&nbsp; _Once extracted, place the_&nbsp; `GEBCO_2020.nc` _file under the_&nbsp; `dbs/bathymetry/` _sub-directory._
 
 2. Copy an arbitrary local file into the container's filesystem using
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `docker cp <path/to/file> <container ID>:<desired/path/to/file>`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Be sure to use_&nbsp; `/home/woss_reqs/` _as target container directory to copy the DBs directory into, then adapt ns-3 scripts to point to it._
+&nbsp;&nbsp;&nbsp;&nbsp; _Be sure to use_&nbsp; `/home/woss_reqs/` _as target container directory to copy the DBs directory into, then adapt ns-3 scripts to point to it._
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Moreover, in order to correctly copy the databases directory_&nbsp; `dbs` _, you should add the_&nbsp; `-r` _(recursive) option to the_&nbsp; `docker cp` _command._
+&nbsp;&nbsp;&nbsp;&nbsp; _Moreover, in order to correctly copy the databases directory_&nbsp; `dbs` _, you should add the_&nbsp; `-r` _(recursive) option to the_&nbsp; `docker cp` _command._
 
 3. Copy an arbitrary container's file to local filesystem using
 
@@ -69,7 +69,7 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./build-debug.sh` or `./build-optimized.sh` respectively 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _The aforementioned utility scripts are placed in directory_&nbsp; `/home/ns-allinone-3.33/ns-3.33/` _within a container's filesystem._
+&nbsp;&nbsp;&nbsp;&nbsp; _The aforementioned utility scripts are placed in directory_&nbsp; `/home/ns-allinone-3.33/ns-3.33/` _within a container's filesystem._
 
 # Citing this work
 
