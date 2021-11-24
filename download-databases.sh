@@ -2,7 +2,8 @@
 
 # MIT License
 
-# Copyright (c) 2021 Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab)
+# Copyright (c) 2021 Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab, 
+# Sapienza University of Rome)
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +27,13 @@ cd $1
 
 echo "Downloading databases"
 
-wget http://telecom.dei.unipd.it/ns/woss/files/WOSS-dbs-v1.6.0.tar.gz
-tar -xf WOSS-dbs-v1.6.0.tar.gz
-rm WOSS-dbs-v1.6.0.tar.gz
-wget https://www.bodc.ac.uk/data/open_download/gebco/gebco_2020/zip/
-unzip gebco_2020_netcdf.zip
-rm gebco_2020_netcdf.zip
-mv gebco_2020_netcdf/GEBCO_2020.nc dbs/bethymetry/
+wget http://telecom.dei.unipd.it/ns/woss/files/WOSS-dbs-v1.6.0.tar.gz && \
+tar -xf WOSS-dbs-v1.6.0.tar.gz && \
+rm WOSS-dbs-v1.6.0.tar.gz && \
+curl -L -o gebco_2020_netcdf.zip https://www.bodc.ac.uk/data/open_download/gebco/gebco_2020/zip/ && \
+unzip gebco_2020_netcdf.zip && \
+rm gebco_2020_netcdf.zip && \
+mv GEBCO_2020.nc dbs/bathymetry/
 
 echo "Databases downloaded at directory: $1/dbs/"
 exit 0
