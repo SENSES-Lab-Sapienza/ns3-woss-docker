@@ -1,0 +1,27 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: ns-3 and WOSS Docker images
+message: >-
+  If you use any of the Docker images described in
+  this repository, please cite this work using the
+  following metadata.
+type: software
+authors:
+  - given-names: Emanuele
+    family-names: Giona
+    email: giona@di.uniroma1.it
+    affiliation: >-
+      Department of Computer Science, Sapienza
+      University of Rome
+    orcid: 'https://orcid.org/0000-0003-0871-7156'
+url: >-
+  https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker
+keywords:
+  - docker
+  - ns-3
+  - woss
+  - network-simulation
+license: MIT
+version: '1.0'
