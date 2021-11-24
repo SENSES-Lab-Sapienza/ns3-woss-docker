@@ -2,7 +2,8 @@
 
 # MIT License
 
-# Copyright (c) 2021 Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab)
+# Copyright (c) 2021 Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab, 
+# Sapienza University of Rome)
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

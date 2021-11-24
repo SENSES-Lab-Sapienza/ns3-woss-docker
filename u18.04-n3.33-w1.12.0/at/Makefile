@@ -1,4 +1,5 @@
-# Copyright (C) 2021  Emanuele Giona
+# Copyright (C) 2021  Emanuele Giona <giona.emanuele@gmail.com> (SENSES Lab, 
+# Sapienza University of Rome)
 #
 #	  Adapted from Michael B. Porter
 #
