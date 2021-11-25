@@ -24,9 +24,4 @@ keywords:
   - woss
   - network-simulation
 license: MIT
-identifiers:
-  - type: doi
-    value: 10.5281/zenodo.5727519
-    description: >-
-      DOI associated with all possible versions of
-      ns3-woss-docker GitHub repository
+doi: 10.5281/zenodo.5727519
