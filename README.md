@@ -95,7 +95,7 @@ If you use any of the Docker images described in this repository, please cite th
 
 **APA**
 ```
-Giona, E. ns-3 and WOSS Docker images [Computer software]. https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker
+Giona, E. ns-3 and WOSS Docker images [Computer software]. https://doi.org/10.5281/zenodo.5727519
 ```
 
 **BibTex**
@@ -103,8 +103,8 @@ Giona, E. ns-3 and WOSS Docker images [Computer software]. https://github.com/SE
 @software{Giona_ns-3_and_WOSS,
 author = {Giona, Emanuele},
 license = {MIT},
-title = {{ns-3 and WOSS Docker images}},
-url = {https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker}
+doi = {10.5281/zenodo.5727519},
+title = {{ns-3 and WOSS Docker images}}
 }
 ```
 
