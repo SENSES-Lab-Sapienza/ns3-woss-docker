@@ -144,7 +144,7 @@ chosen for the Docker images does not necessarily apply to them.
 [image5]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.35-w1.12.2
 [file5]: ./u18.04-n3.35-w1.12.2/Dockerfile
 
-[docker-hub-repo]: https://hub.docker.com/repository/docker/egiona/ns3-woss
+[docker-hub-repo]: https://hub.docker.com/r/egiona/ns3-woss
 [docker-install]: https://docs.docker.com/engine/install/
 
 [woss-dbs]: http://telecom.dei.unipd.it/ns/woss/files/WOSS-dbs-v1.6.0.tar.gz
