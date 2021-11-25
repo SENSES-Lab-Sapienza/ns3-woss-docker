@@ -6,6 +6,14 @@ The scope of this repository is to automate the installation process of both
 ns-3 and WOSS library, in order to provide a hassle-free setup process for a 
 simulation environment.
 
+Images ship with fully-functioning ns-3 and WOSS library installations, also 
+including the corresponding woss-ns3 module. 
+ns-3 is provided already built in `debug` and `optimized` profiles, with the 
+former being the active version on a first run; utility scripts to quickly
+switch between them are provided (see below).
+Database configuration is left to the user, mainly for Docker image size 
+purposes.
+
 ## Available configurations
 
 | OS | ns-3 | WOSS | Docker image | Dockerfile |
@@ -83,7 +91,24 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 # Citing this work
 
-If you use any of the Docker images described in this repository, please cite this work using metadata described in the [CITATION.cff][citation] file.
+If you use any of the Docker images described in this repository, please cite this work using any of the following methods:
+
+**APA**
+```
+Giona, E. ns-3 and WOSS Docker images [Computer software]. https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker
+```
+
+**BibTex**
+```
+@software{Giona_ns-3_and_WOSS,
+author = {Giona, Emanuele},
+license = {MIT},
+title = {{ns-3 and WOSS Docker images}},
+url = {https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker}
+}
+```
+
+Bibliography entries generated using [Citation File Format][cff] described in the [CITATION.cff][citation] file.
 
 # License
 
@@ -126,6 +151,7 @@ chosen for the Docker images does not necessarily apply to them.
 
 [ns3-builds]: https://www.nsnam.org/docs/release/3.35/tutorial/html/getting-started.html#build-profiles
 
+[cff]: https://citation-file-format.github.io/
 [citation]: ./CITATION.cff
 
 [docker-license]: ./LICENSE
