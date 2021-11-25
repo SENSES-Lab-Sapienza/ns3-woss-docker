@@ -102,9 +102,10 @@ Giona, E. ns-3 and WOSS Docker images [Computer software]. https://doi.org/10.52
 ```
 @software{Giona_ns-3_and_WOSS,
 author = {Giona, Emanuele},
-license = {MIT},
 doi = {10.5281/zenodo.5727519},
-title = {{ns-3 and WOSS Docker images}}
+license = {MIT},
+title = {{ns-3 and WOSS Docker images}},
+url = {https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker}
 }
 ```
 
