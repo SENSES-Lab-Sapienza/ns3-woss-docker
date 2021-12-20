@@ -83,7 +83,7 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
 5. Mount a local directory into a container (just once, instead of `docker run`) using
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./mount <local/path/to/directory> <path/to/directory> <container name> <image name>`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `./mount.sh <local/path/to/directory> <path/to/directory> <container name> <image name>`
 
 &nbsp;&nbsp;&nbsp;&nbsp; _Local path to be mounted must be absolute. The path within a container's filesystem is placed under its_&nbsp; `/home/` _directory._
 <br/>
