@@ -49,7 +49,7 @@ help:
 show_profile:
 	. $(NS3_PY_ENV)/bin/activate
 	cd $(NS3_CURR_PROFILE)
-	./ns3 show profile
+	./waf --check-profile
 	deactivate
 
 compile:
