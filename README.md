@@ -20,12 +20,15 @@ Docker image name: [**`egiona/ns3-woss`**][docker-hub-repo].
 
 | Docker image tag | OS | ns-3 | Build system | WOSS | Dockerfile |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| [`u18.04-n3.37-w1.12.4-r2`][image6] | Ubuntu 18.04 | [3.37][ns3.37] | CMake[^ns3-cmake] | [1.12.4][woss-changelog] | [link][file6] |
-| [`u18.04-n3.35-w1.12.2-r2`][image5] | Ubuntu 18.04 | [3.35][ns3.35] | Waf | [1.12.2][woss-changelog] | [link][file5] |
-| [`u18.04-n3.34-w1.12.2-r2`][image4] | Ubuntu 18.04 | [3.34][ns3.34] | Waf | [1.12.2][woss-changelog] | [link][file4] |
-| [`u18.04-n3.34-w1.12.1-r2`][image3] | Ubuntu 18.04 | [3.34][ns3.34] | Waf | [1.12.1][woss-changelog] | [link][file3] |
-| [`u18.04-n3.33-w1.12.1-r2`][image2] | Ubuntu 18.04 | [3.33][ns3.33] | Waf | [1.12.1][woss-changelog] | [link][file2] |
-| [`u18.04-n3.33-w1.12.0-r2`][image1] | Ubuntu 18.04 | [3.33][ns3.33] | Waf | [1.12.0][woss-changelog] | [link][file1] |
+| [`u20.04-n3.40-w1.12.5`][image5] | Ubuntu 20.04 | [3.40][ns3.40] | CMake | [1.12.5][woss-changelog] | [link][file5] |
+| [`u20.04-n3.37-w1.12.5`][image4] | Ubuntu 20.04[^gcc-issue] | [3.37][ns3.37] | CMake[^ns3-cmake] | [1.12.5][woss-changelog] | [link][file4] |
+| [`u18.04-n3.35-w1.12.5`][image3] | Ubuntu 18.04 | [3.35][ns3.35] | Waf | [1.12.5][woss-changelog] | [link][file3] |
+| [`u18.04-n3.34-w1.12.5`][image2] | Ubuntu 18.04 | [3.34][ns3.34] | Waf | [1.12.5][woss-changelog] | [link][file2] |
+| [`u18.04-n3.33-w1.12.5`][image1] | Ubuntu 18.04 | [3.33][ns3.33] | Waf | [1.12.5][woss-changelog] | [link][file1] |
+
+Full changelog can be found at [this page](./CHANGELOG.md).
+
+[^gcc-issue]: ns-3.37 images based on Ubuntu 18.04 should NOT be used due an issue related to GCC version mismatch between builds for WOSS requirements and ns-3 itself. More details can be found at [this page](https://gitlab.com/nsnam/ns-3-dev/-/blob/ns-3.36/RELEASE_NOTES.md#release-336).
 
 [^ns3-cmake]: ns-3 adopted the CMake build system starting from 3.36 release. More details can be found at [this page](https://www.nsnam.org/docs/manual/html/working-with-cmake.html).
 
@@ -86,24 +89,20 @@ However, _utility scripts_ are only provided for UNIX-like systems.
 
 ## Optional instructions
 
-> As long as you `restart` the same container, any modification to its contents will be preserved.
+> As long as you `docker restart` the same container, any modification to its contents will be preserved.
 However, it is advisable to keep a _local backup copy_ of your modules and experiment results.
 
-1. Execute the utility script to download [WOSS][woss-dbs], [GEBCO 2020][gebco2020], and [GEBCO 2022 2D 15 arc-seconds][gebco2022] databases _locally_ using
+1. Download [WOSS databases][woss-dbs] (_required_), and optional bathymetry databases such as [GEBCO 2020][gebco2020], [GEBCO 2022][gebco2022] or [GEBCO 2023][gebco2023] _locally_.
 
-    `./download-databases.sh <DBs directory>`
-
-    _Were this utility to fail (or cannot be run due the lack of a UNIX-like system), download both databases via browser and use your favorite decompression tool on them._
-
-    _More specifically, the extracted_&nbsp; `dbs` _directory should contain 4 sub-directories, namely:_&nbsp; `bathymetry`_,_ `seafloor_sediment`_,_ `ssp`_, and_&nbsp; `transducers`_._
-
-    _Once extracted, place the_&nbsp; `GEBCO_XXXX.nc` _file under the_&nbsp; `dbs/bathymetry/` _sub-directory._
+    More specifically, the extracted `dbs` directory should contain 4 sub-directories, namely: `bathymetry`, `seafloor_sediment`, `ssp`, and `transducers`.
+    
+    For GEBCO databases users only, place the extracted `GEBCO_XXXX.nc` file under the `dbs/bathymetry/` sub-directory.
+    It is advisable to store these files outside the container filesystem and using the `docker mount` utility to use them for your simulations.
+    Please see below step 4.
 
 2. Copy an arbitrary local file into the container's filesystem using
 
     `docker cp <path/to/file> <container ID>:<desired/path/to/file>`
-
-    _Be sure to use_&nbsp; `/home/woss_reqs/` _as target container directory to copy the DBs directory into, then adapt ns-3 scripts to point to it._
 
 3. Copy an arbitrary container's file to local filesystem using
 
@@ -115,13 +114,13 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
     _Local path to be mounted must be absolute. The path within a container's filesystem is placed under its_&nbsp; `/home/` _directory._
 
-    _This is only needed the first time a container is instantiated, subsequent calls to_&nbsp; `docker start` _on the same container will automatically load the mounted directory._
+    _This is only needed the **first time** a container is instantiated, subsequent calls to_&nbsp; `docker start` _on the same container will automatically load the mounted directory._
 
-5. Starting from `r2` images, an environment variables `CXX_CONFIG` is available for user-defined scripts to adapt their GCC compilation parameters; by default, such variable holds the following contents:
+5. Starting from `r2` images onwards, an environment variable `CXX_CONFIG` is available for user-defined scripts to adapt their GCC compilation parameters; by default, such variable holds the following contents:
 
     `CXX_CONFIG="-Wall -Werror -Wno-unused-variable"`
 
-    Moreover, [build scripts](./u18.04-n3.37-w1.12.4-r2/ns3-build/) have been updated to provide an exit value reflective of ns-3's configuration and build outcome.
+    Moreover, [build scripts](./u20.04-n3.37-w1.12.4-r2/ns3-build/) have been updated to provide an exit value reflective of ns-3's configuration and build outcome.
 
 # Citing this work
 
@@ -161,7 +160,7 @@ chosen for the Docker images does not necessarily apply to them.
 
 
 [ns3]: https://www.nsnam.org/
-[woss]: http://telecom.dei.unipd.it/ns/woss/
+[woss]: https://woss.dei.unipd.it/
 [docker]: https://www.docker.com/
 [woss-ns3]: https://github.com/MetalKnight/woss-ns3
 
@@ -171,34 +170,34 @@ chosen for the Docker images does not necessarily apply to them.
 [ns3.34]: https://www.nsnam.org/releases/ns-3-34/
 [ns3.35]: https://www.nsnam.org/releases/ns-3-35/
 [ns3.37]: https://www.nsnam.org/releases/ns-3-37/
+[ns3.40]: https://www.nsnam.org/releases/ns-3-40/
 
-[woss-changelog]: http://telecom.dei.unipd.it/ns/woss/doxygen/Changelog.html
+[woss-changelog]: https://woss.dei.unipd.it/woss/doxygen/Changelog.html
 
-[latest-debug]: ./u18.04-n3.37-w1.12.4-r2/ns3-build/build-debug.sh
-[latest-optimized]: ./u18.04-n3.37-w1.12.4-r2/ns3-build/build-optimized.sh
-[latest-build]: ./u18.04-n3.37-w1.12.4-r2/ns3-build/
-[latest-makefile]: ./u18.04-n3.37-w1.12.4-r2/ns3-utils/Makefile
+[latest-debug]: ./u20.04-n3.40-w1.12.5/ns3-build/build-debug.sh
+[latest-optimized]: ./u20.04-n3.40-w1.12.5/ns3-build/build-optimized.sh
+[latest-build]: ./u20.04-n3.40-w1.12.5/ns3-build/
+[latest-makefile]: ./u20.04-n3.40-w1.12.5/ns3-utils/Makefile
 
-[image6]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.37-w1.12.4-r2
-[image5]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.35-w1.12.2-r2
-[image4]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.34-w1.12.2-r2
-[image3]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.34-w1.12.1-r2
-[image2]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.33-w1.12.1-r2
-[image1]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.33-w1.12.0-r2
-[file6]: ./u18.04-n3.37-w1.12.4-r2/Dockerfile
-[file5]: ./u18.04-n3.35-w1.12.2-r2/Dockerfile
-[file4]: ./u18.04-n3.34-w1.12.2-r2/Dockerfile
-[file3]: ./u18.04-n3.34-w1.12.1-r2/Dockerfile
-[file2]: ./u18.04-n3.33-w1.12.1-r2/Dockerfile
-[file1]: ./u18.04-n3.33-w1.12.0-r2/Dockerfile
+[image5]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u20.04-n3.40-w1.12.5
+[image4]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u20.04-n3.37-w1.12.5
+[image3]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.35-w1.12.5
+[image2]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.34-w1.12.5
+[image1]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.33-w1.12.5
+[file5]: ./u20.04-n3.40-w1.12.5/Dockerfile
+[file4]: ./u20.04-n3.37-w1.12.5/Dockerfile
+[file3]: ./u18.04-n3.35-w1.12.5/Dockerfile
+[file2]: ./u18.04-n3.34-w1.12.5/Dockerfile
+[file1]: ./u18.04-n3.33-w1.12.5/Dockerfile
 
 [docker-install]: https://docs.docker.com/engine/install/
 
-[woss-dbs]: http://telecom.dei.unipd.it/ns/woss/files/WOSS-dbs-v1.6.0.tar.gz
+[woss-dbs]: https://woss.dei.unipd.it/woss/files/WOSS-dbs-v1.6.0.tar.gz
 [gebco2020]: https://www.bodc.ac.uk/data/open_download/gebco/gebco_2020/zip/
 [gebco2022]: https://www.bodc.ac.uk/data/open_download/gebco/gebco_2022/zip/
+[gebco2023]: https://www.bodc.ac.uk/data/open_download/gebco/gebco_2023/zip/
 
-[ns3-builds]: https://www.nsnam.org/docs/release/3.37/tutorial/html/getting-started.html#build-profiles
+[ns3-builds]: https://www.nsnam.org/docs/release/3.40/tutorial/html/getting-started.html#build-profiles
 
 [cff]: https://citation-file-format.github.io/
 [citation]: ./CITATION.cff
@@ -206,4 +205,4 @@ chosen for the Docker images does not necessarily apply to them.
 [senseslab]: https://senseslab.diag.uniroma1.it/
 [docker-license]: ./LICENSE
 [ns3-license]: https://www.nsnam.org/develop/contributing-code/licensing/
-[woss-license]: http://telecom.dei.unipd.it/ns/woss/doxygen/License.html
+[woss-license]: https://woss.dei.unipd.it/woss/doxygen/License.html
