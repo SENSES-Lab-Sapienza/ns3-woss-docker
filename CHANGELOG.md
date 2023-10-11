@@ -1,8 +1,8 @@
 # Changelog
 
-## Release v3.0.0
+## Release v3.0.1
 
-[Link to release][v300]
+[Link to release][v301]
 
 **Users are urged to update to any of the images hereby released.**
 
@@ -23,12 +23,13 @@ This release fixes these critical issues:
     Starting from ns-3.36, GCC 8 became the minimum supported version.
     More details can be found at [this page][gcc-8-issue]. 
     
-    Images released prior to v3.0.0 bundled ns-3.37 with WOSS using Ubuntu 18.04 LTS as base image, causing the issue.
+    Images released prior to v3.0.1 bundled ns-3.37 with WOSS using Ubuntu 18.04 LTS as base image, causing the issue.
     Indeed, while ns-3 was being built with GCC 8, WOSS library and its dependencies were instead built and linked using the system-default GCC 7.5.0.
     During simulation execution, segmentation faults were occurring due such mismatch in GCC versions.
 
     In order to fix this issue, upgrading to Ubuntu 20.04 LTS is a quick solution since the system-default GCC version is 9.3.0.
-    As a result, ns-3.37 images based on Ubuntu 18.04 should NOT be used, in favor of the hereby provided one, which is instead based on Ubuntu 20.04 LTS.
+    While this upgrade solved the problem for ns-3.40, it did not prove successful for ns-3.37.
+    As a result, all ns-3.37 images are discontinued; users should upgrade to ns-3.40 introduced in v3.0.1.
 
 - Situational WOSS crashes (due to HDF5 and/or NetCDF-C)
 
@@ -36,11 +37,11 @@ This release fixes these critical issues:
     More details can be found at [this page][woss-netcdf-crash].
 
     In order to fix this issue, upgrading all WOSS requirements to their latest versions proved to be a solution to this problem.
-    As a result, all images prior to v3.0.0 should NOT be used in case you encounter this problem during your WOSS-based simulations.
+    As a result, all images prior to v3.0.1 should NOT be used in case you encounter this problem during your WOSS-based simulations.
 
 Minor changes:
 
-- Instructions in each `Dockerfile` are re-arranged to reduce layers
+- Instructions in each `Dockerfile` have been re-arranged to reduce the number of layers
 
 ## Release v2.0.1
 
@@ -66,7 +67,7 @@ Introduced support to new ns-3 and WOSS versions:
 
 ns-3 adopted the CMake build system starting from 3.36 release.
 
-As a result, a new container filesystem has been designed, featuring separate ns-3 build directories depending on the profiles: `ns-3.37-debug` and `ns-3.37-optimized` directories respectively contain identical ns-3 source tree, permanently kept in their specific build profile.
+As a result, a new container filesystem has been designed, featuring separate ns-3 build directories depending on the profiles: `ns-3.xx-debug` and `ns-3.xx-optimized` directories respectively contain identical ns-3 source tree, permanently kept in their specific build profile.
 
 More details can be found at [this page][ns3-cmake].
 
@@ -90,11 +91,11 @@ Supported versions:
 [v100]: https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker/releases/tag/v1.0.0
 [v110]: https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker/releases/tag/v1.1.0
 [v201]: https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker/releases/tag/v2.0.1
-[v300]: https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker/releases/tag/v3.0.0
+[v301]: https://github.com/SENSES-Lab-Sapienza/ns3-woss-docker/releases/tag/v3.0.1
 
 <!--- v1.1.0 --->
 [ns3-cmake]: https://www.nsnam.org/docs/manual/html/working-with-cmake.html
 
-<!--- v3.0.0 --->
+<!--- v3.0.1 --->
 [gcc-8-issue]: https://gitlab.com/nsnam/ns-3-dev/-/blob/ns-3.36/RELEASE_NOTES.md#release-336
 [woss-netcdf-crash]: https://github.com/MetalKnight/woss-ns3/issues/43#event-10588536371
