@@ -21,19 +21,42 @@ Docker image name: [**`egiona/ns3-woss`**][docker-hub-repo].
 | Docker image tag | OS | ns-3 | Build system | WOSS | Dockerfile |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [`u20.04-n3.40-w1.12.5`][image5] | Ubuntu 20.04 | [3.40][ns3.40] | CMake | [1.12.5][woss-changelog] | [link][file5] |
-| [`u20.04-n3.37-w1.12.5`][image4] | Ubuntu 20.04[^gcc-issue] | [3.37][ns3.37] | CMake[^ns3-cmake] | [1.12.5][woss-changelog] | [link][file4] |
 | [`u18.04-n3.35-w1.12.5`][image3] | Ubuntu 18.04 | [3.35][ns3.35] | Waf | [1.12.5][woss-changelog] | [link][file3] |
 | [`u18.04-n3.34-w1.12.5`][image2] | Ubuntu 18.04 | [3.34][ns3.34] | Waf | [1.12.5][woss-changelog] | [link][file2] |
 | [`u18.04-n3.33-w1.12.5`][image1] | Ubuntu 18.04 | [3.33][ns3.33] | Waf | [1.12.5][woss-changelog] | [link][file1] |
 
 Full changelog can be found at [this page](./CHANGELOG.md).
 
-[^gcc-issue]: ns-3.37 images based on Ubuntu 18.04 should NOT be used due an issue related to GCC version mismatch between builds for WOSS requirements and ns-3 itself. More details can be found at [this page](https://gitlab.com/nsnam/ns-3-dev/-/blob/ns-3.36/RELEASE_NOTES.md#release-336).
-
-[^ns3-cmake]: ns-3 adopted the CMake build system starting from 3.36 release. More details can be found at [this page](https://www.nsnam.org/docs/manual/html/working-with-cmake.html).
-
 > New revisions of images (_i.e. `-rN` suffix_) **do not overwrite** previous ones in order to provide backwards compatibility.
 Previous tags can still be found on [DockerHub][docker-hub-repo], but their use is discouraged.
+
+### Discontinued images
+
+The following image tags have been discontinued and are not available from the DockerHub repository.
+
+If you are using any of these tags, please consider switching to a different one that is still supported.
+
+| Docker image tag | Reason | Date |
+| :---: | :---: | :---: |
+| `u20.04-n3.37-w1.12.5` <br> `u18.04-n3.37-w1.12.4-r2` <br> `u18.04-n3.37-w1.12.4` | GCC compiler issues; <br> not solved by Ubuntu 20.04 upgrade | 2023/10/11 |
+
+### Contributing
+
+Any problems should be reported via the GitHub issue tracker.
+
+Users are welcomed to contribute new images (_e.g._ different base image or other ns-3 versions) via Pull Request and adhering to the following style:
+
+- Directory named `<A-B-C>` with: `A` equal to an arbitrary versioned base image short-hand (_i.e._ `u20.04` refers to Ubuntu 20.04); `B` equal to the ns-3 version bundled (_i.e._ `n3.40` refers to ns-3.40); and `C` equal to the WOSS version bundled (_i.e._ `w1.12.5` refers to WOSS 1.12.5).
+
+    Such directory name will also be used as image tag.
+
+- The directory shall contain a well-commented `Dockerfile` for the image creation.
+
+    The `at` sub-directory present in the original images is used to build Acoustic-Toolbox selecting `gfortran` as FORTRAN compiler; it is advised to stick to it and leave it untouched.
+    In case this compiler is not available to your base image, you should take care of compiling Acoustic-Toolbox on your own (it is among WOSS requirements).
+
+    Other contents may be freely modified, although for uniformity purposes it is advised to maintain the same functionality they provide.
+    The `ns3-build` directory contains useful scripts to build ns-3 with all WOSS requirements; if modified, you should take care of solving this task.
 
 # Usage guidelines
 
@@ -68,15 +91,15 @@ However, _utility scripts_ are only provided for UNIX-like systems.
 
     [`./build-debug.sh`][latest-debug] or [`./build-optimized.sh`][latest-optimized] respectively 
 
-    The aforementioned utility scripts are placed in the directory `/home` of a container's filesystem (for `r2` and ns-3.37+ images).
+    The aforementioned utility scripts are placed in the directory `/home` of a container's filesystem (for `r2` and later images).
 
     _Previous images stored them in directory_&nbsp; `/home/ns-allinone-3.xx/ns-3.xx/` _within a container's filesystem (replacing_&nbsp; `xx` _with your installed version of ns-3)._
 
-2. Starting from ns-3.37+ images, as well as any new revision of previous ones, a utility script in the form of a [Makefile][latest-makefile] is provided.
+2. Starting from `r2` images a utility script in the form of a [Makefile][latest-makefile] is provided.
 
     Similarly to [build scripts][latest-build], this utility Makefile is placed in the directory `/home` of a container's filesystem.
 
-    _Previous revisions of images (apart from ns-3.37+) had no availability of such utility._
+    _Previous revisions of images had no availability of such utility._
 
     This script allows for easy decoupling of development directory from ns-3's source directory.
     Indeed, it is possible to keep novel modules and program driver scripts outside `src` (or `contrib`) and `scratch` directories of the ns-3 installation directory during development, and only copying them afterwards.
@@ -120,7 +143,7 @@ However, it is advisable to keep a _local backup copy_ of your modules and exper
 
     `CXX_CONFIG="-Wall -Werror -Wno-unused-variable"`
 
-    Moreover, [build scripts](./u20.04-n3.37-w1.12.4-r2/ns3-build/) have been updated to provide an exit value reflective of ns-3's configuration and build outcome.
+    Moreover, [build scripts](./u20.04-n3.40-w1.12.5/ns3-build/) have been updated to provide an exit value reflective of ns-3's configuration and build outcome.
 
 # Citing this work
 
@@ -169,7 +192,6 @@ chosen for the Docker images does not necessarily apply to them.
 [ns3.33]: https://www.nsnam.org/releases/ns-3-33/
 [ns3.34]: https://www.nsnam.org/releases/ns-3-34/
 [ns3.35]: https://www.nsnam.org/releases/ns-3-35/
-[ns3.37]: https://www.nsnam.org/releases/ns-3-37/
 [ns3.40]: https://www.nsnam.org/releases/ns-3-40/
 
 [woss-changelog]: https://woss.dei.unipd.it/woss/doxygen/Changelog.html
@@ -180,12 +202,10 @@ chosen for the Docker images does not necessarily apply to them.
 [latest-makefile]: ./u20.04-n3.40-w1.12.5/ns3-utils/Makefile
 
 [image5]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u20.04-n3.40-w1.12.5
-[image4]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u20.04-n3.37-w1.12.5
 [image3]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.35-w1.12.5
 [image2]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.34-w1.12.5
 [image1]: https://hub.docker.com/r/egiona/ns3-woss/tags?page=1&name=u18.04-n3.33-w1.12.5
 [file5]: ./u20.04-n3.40-w1.12.5/Dockerfile
-[file4]: ./u20.04-n3.37-w1.12.5/Dockerfile
 [file3]: ./u18.04-n3.35-w1.12.5/Dockerfile
 [file2]: ./u18.04-n3.34-w1.12.5/Dockerfile
 [file1]: ./u18.04-n3.33-w1.12.5/Dockerfile
